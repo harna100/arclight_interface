@@ -27,13 +27,13 @@ namespace Software_Interface_v2 {
 
 		public NumericUpDown() {
 			InitializeComponent();
-			_maxValue = 255;
-			_minValue = 0;
-			_numValue = _maxValue;
-			NumericSlider.Maximum = _maxValue;
-			NumericSlider.Minimum = _minValue;
-			NumericSlider.Value = _numValue;
-			txtNum.Text = _numValue.ToString();
+//			_maxValue = 255;
+//			_minValue = 0;
+//			_numValue = _maxValue;
+//			NumericSlider.Maximum = _maxValue;
+//			NumericSlider.Minimum = _minValue;
+//			NumericSlider.Value = _numValue;
+//			txtNum.Text = _numValue.ToString();
 
 		}
 
@@ -74,7 +74,8 @@ namespace Software_Interface_v2 {
 			get { return (int) GetValue(MaxValueProperty); }
 			set {
 				SetValue(MaxValueProperty, value);
-				NumericSlider.Maximum = value;
+//				NumericSlider.Maximum = value;
+
 			}
 		}
 
@@ -85,7 +86,7 @@ namespace Software_Interface_v2 {
 			get { return (int) GetValue(MinValueProperty); }
 			set {
 				SetValue(MinValueProperty, value);
-				NumericSlider.Minimum = value;
+//				NumericSlider.Minimum = value;
 			}
 		}
 
@@ -107,8 +108,9 @@ namespace Software_Interface_v2 {
 				{
 					SetValue(NumValueProperty, value);
 				}
-				TextBoxValue = NumValue.ToString();
-				NumericSlider.Value = NumValue;
+				SetValue(TextBoxValueProperty, NumValue.ToString());
+//				TextBoxValue = NumValue.ToString();
+//				NumericSlider.Value = NumValue;
 				NumericValueChanged?.Invoke(this, EventArgs.Empty);}
 		}
 
@@ -132,7 +134,7 @@ namespace Software_Interface_v2 {
 				{
 					SetValue(TextBoxValueProperty, toCheck.ToString());
 				}
-				txtNum.Text = TextBoxValue;
+//				txtNum.Text = TextBoxValue;
 
 			}
 		}
