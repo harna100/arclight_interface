@@ -130,7 +130,7 @@
                         <StackPanel Grid.Row="0" Grid.Column="1"
                                     Margin="0 0 15 0">
                             <TextBlock>Width</TextBlock>
-                            <local:NumericUpDown x:Name="Width"
+                            <local:NumControl x:Name="Width"
                                                  MinValue="0" MaxValue="60" NumValue="0"/>
                         </StackPanel>
 
@@ -159,25 +159,25 @@
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Row="0" Grid.Column="0">
                                         <TextBlock FontSize="20" Margin="8 0 0 4">Red</TextBlock>
-                                        <local:NumericUpDown x:Name="PrimaryRed"
+                                        <local:NumControl x:Name="PrimaryRed"
                                                              MinValue="0" MaxValue="255" NumValue="0" 
                                                              NumericValueChanged="PrimaryNumericChanged"/>
                                     </StackPanel>
                                     <StackPanel Grid.Row="1" Grid.Column="0">
                                         <TextBlock FontSize="20" Margin="8 0 0 4">Green</TextBlock>
-                                        <local:NumericUpDown x:Name="PrimaryGreen"
+                                        <local:NumControl x:Name="PrimaryGreen"
                                                              MinValue="0" MaxValue="255" NumValue="0" 
                                                              NumericValueChanged="PrimaryNumericChanged"/>
                                     </StackPanel>
                                     <StackPanel Grid.Row="2" Grid.Column="0">
                                         <TextBlock FontSize="20" Margin="8 0 0 4">Blue</TextBlock>
-                                        <local:NumericUpDown x:Name="PrimaryBlue"
+                                        <local:NumControl x:Name="PrimaryBlue"
                                                              MinValue="0" MaxValue="255" NumValue="0" 
                                                              NumericValueChanged="PrimaryNumericChanged"/>
                                     </StackPanel>
                                     <StackPanel Grid.Row="3" Grid.Column="0">
                                         <TextBlock FontSize="20" Margin="8 0 0 4">Alpha</TextBlock>
-                                        <local:NumericUpDown x:Name="PrimaryAlpha"
+                                        <local:NumControl x:Name="PrimaryAlpha"
                                                              MinValue="0" MaxValue="255" NumValue="255" 
                                                              NumericValueChanged="PrimaryNumericChanged"/>
                                     </StackPanel>
@@ -194,8 +194,8 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <local:NumericUpDown x:Name="PrimaryWhite"
-                                                         MinValue="0" MaxValue="27000" NumValue="6500"
+                                    <local:NumControl x:Name="PrimaryWhite"
+                                                         MinValue="1500" MaxValue="27000" NumValue="6500"
                                                          Grid.Column="0"/>
                                     <Border BorderBrush="Black" BorderThickness="2"
                                             Grid.Column="1">
@@ -228,25 +228,25 @@
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Row="0" Grid.Column="0">
                                         <TextBlock FontSize="20" Margin="8 0 0 4">Red</TextBlock>
-                                        <local:NumericUpDown x:Name="SecondaryRed"
+                                        <local:NumControl x:Name="SecondaryRed"
                                                              MinValue="0" MaxValue="255" NumValue="0" 
                                                              NumericValueChanged="SecondaryNumericChanged"/>
                                     </StackPanel>
                                     <StackPanel Grid.Row="1" Grid.Column="0">
                                         <TextBlock FontSize="20" Margin="8 0 0 4">Green</TextBlock>
-                                        <local:NumericUpDown x:Name="SecondaryGreen"
+                                        <local:NumControl x:Name="SecondaryGreen"
                                                              MinValue="0" MaxValue="255" NumValue="0" 
                                                              NumericValueChanged="SecondaryNumericChanged"/>
                                     </StackPanel>
                                     <StackPanel Grid.Row="2" Grid.Column="0">
                                         <TextBlock FontSize="20" Margin="8 0 0 4">Blue</TextBlock>
-                                        <local:NumericUpDown x:Name="SecondaryBlue"
+                                        <local:NumControl x:Name="SecondaryBlue"
                                                              MinValue="0" MaxValue="255" NumValue="0" 
                                                              NumericValueChanged="SecondaryNumericChanged"/>
                                     </StackPanel>
                                     <StackPanel Grid.Row="3" Grid.Column="0">
                                         <TextBlock FontSize="20" Margin="8 0 0 4">Alpha</TextBlock>
-                                        <local:NumericUpDown x:Name="SecondaryAlpha"
+                                        <local:NumControl x:Name="SecondaryAlpha"
                                                              MinValue="0" MaxValue="255" NumValue="255" 
                                                              NumericValueChanged="SecondaryNumericChanged"/>
                                     </StackPanel>
@@ -265,8 +265,8 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <local:NumericUpDown x:Name="SecondaryWhite"
-                                                         MinValue="0" MaxValue="27000" NumValue="6500"
+                                    <local:NumControl x:Name="SecondaryWhite"
+                                                         MinValue="1500" MaxValue="27000" NumValue="6500"
                                                          Grid.Column="0"/>
                                     <Border BorderBrush="Black" BorderThickness="2"
                                             Grid.Column="1">

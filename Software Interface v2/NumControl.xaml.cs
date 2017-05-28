@@ -1,10 +1,12 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Software_Interface_v2 {
     public partial class NumControl : UserControl {
-        
-        
+        private string _prevText;
+        public event EventHandler NumericValueChanged;
+
         
         
         public NumControl() {
@@ -16,16 +18,64 @@ namespace Software_Interface_v2 {
                 NumericSlider.Minimum = MinValue;
                 NumericSlider.Maximum = MaxValue;
                 NumericSlider.Value = NumValue;
+                TextBoxNum.Text = NumValue.ToString();
             };
         }
 
         private void OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+            NumValue = (int) NumericSlider.Value;
+            SetTextBox(NumValue.ToString());
         }
 
         private void ButtUpClick(object sender, RoutedEventArgs e) {
+            if (NumValue == MaxValue)
+            {
+                return;
+            }
+            NumValue += 1;
+            SetTextBox(NumValue.ToString());
+            NumericSlider.Value = NumValue;
         }
 
         private void ButtDownClick(object sender, RoutedEventArgs e) {
+            if (NumValue == MinValue)
+            {
+                return;
+            }
+            NumValue -= 1;
+            SetTextBox(NumValue.ToString());
+            NumericSlider.Value = NumValue;
+        }
+        
+        
+        private void OnTextChanged(object sender, TextChangedEventArgs e) {
+            
+        }
+
+        private void SetTextBox(string text) {
+            TextBoxNum.TextChanged -= OnTextChanged;
+            TextBoxNum.Text = text;
+            TextBoxNum.TextChanged += OnTextChanged;
+        }
+        
+        
+        
+        private void TextBoxNum_OnLostFocus(object sender, RoutedEventArgs e) {
+            int toSet;
+            if (Int32.TryParse(TextBoxNum.Text, out toSet))
+            {
+                NumValue = toSet;
+                SetTextBox(NumValue.ToString());
+                NumericSlider.Value = NumValue;
+            }
+            else
+            {
+                SetTextBox(_prevText);
+            }
+        }
+
+        private void TextBoxNum_OnGotFocus(object sender, RoutedEventArgs e) {
+            _prevText = TextBoxNum.Text;
         }
 
 
@@ -47,6 +97,7 @@ namespace Software_Interface_v2 {
                 {
                     SetValue(NumValueProperty, value);
                 }
+                NumericValueChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -66,7 +117,5 @@ namespace Software_Interface_v2 {
             get { return (int) GetValue(MinValueProperty); }
             set { SetValue(MinValueProperty, value); }
         }
-        
-        
     }
 }

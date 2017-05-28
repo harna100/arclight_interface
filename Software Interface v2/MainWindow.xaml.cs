@@ -188,7 +188,7 @@ namespace Software_Interface_v2 {
 
 		// get a RGBA from the white temp page
 		// algorithm from http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
-		private byte[] GetColorWhiteTemp(NumericUpDown toUse) {
+		private byte[] GetColorWhiteTemp(NumControl toUse) {
 			int temp = toUse.NumValue/ 100;
 			double red, green, blue;
 			// calc red

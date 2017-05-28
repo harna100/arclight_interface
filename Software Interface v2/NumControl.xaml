@@ -28,7 +28,10 @@
             <StackPanel Orientation="Horizontal">
                 <TextBox x:Name="TextBoxNum" Margin="5,0,0,0" Width="50"
                          VerticalAlignment="Center"
-                         TextAlignment="Right"/>
+                         TextAlignment="Right"
+                         TextChanged="OnTextChanged"
+                         GotFocus="TextBoxNum_OnGotFocus"
+                         LostFocus="TextBoxNum_OnLostFocus"/>
                 <StackPanel VerticalAlignment="Center">
                     <Button x:Name="ButtUp" Margin="5,0,0,0" Width="Auto" Click="ButtUpClick"
                             Style="{DynamicResource MaterialDesignFlatButton}" Height="15"
