@@ -60,10 +60,10 @@ namespace Software_Interface_v2 {
 //				ListBoxComPorts.ItemsSource = GetAvailablePorts();
 //				DialogBox.ShowDialog(null);
 			}
-			PrimaryAlpha.NumValue = 255;
-			SecondaryAlpha.NumValue = 255;
-			Width.MaxValue = 60;
-			Width.NumValue = 0;
+//			PrimaryAlpha.NumValue = 255;
+//			SecondaryAlpha.NumValue = 255;
+//			Width.MaxValue = 60;
+//			Width.NumValue = 0;
 //			SecondaryWhite.MaxValue = 27000;
 //			SecondaryWhite.NumValue = 6500;
 //			SecondaryWhite.MinValue = 1700;
@@ -140,6 +140,7 @@ namespace Software_Interface_v2 {
 		}
 
 		private void PrimaryNumericChanged(object sender, EventArgs e) {
+//			MessageBox.Show("sfgsdfg");
 			UpdateRGBColor();
 		}
 
@@ -342,7 +343,8 @@ namespace Software_Interface_v2 {
 		public T MaxOrLess<T>(T toCheck, T max) where T:IComparable{
 			return toCheck.CompareTo(max) < 0 ? toCheck : max;
 		}
-/*
+
+		/*
 		private void ListBoxComPorts_OnMouseUp(object sender, MouseButtonEventArgs e) {
 			string selectedPort = ListBoxComPorts.SelectedItem as string;
 
@@ -357,6 +359,12 @@ namespace Software_Interface_v2 {
 			}
 		}*/
 
+		
+		
+		
+		
+		
+		
 		/*
 
 

@@ -27,6 +27,15 @@ namespace Software_Interface_v2 {
 
 		public NumericUpDown() {
 			InitializeComponent();
+			Loaded += (sender, args) => {
+				NumericSlider.Maximum = MaxValue;
+				NumericSlider.Minimum = MinValue;
+				NumericSlider.Value = NumValue;
+				txtNum.Text = NumValue.ToString();
+
+			};
+//			SetValue(MaxValueProperty, Int32.MaxValue);
+//			SetValue(MinValueProperty, Int32.MinValue);
 //			_maxValue = 255;
 //			_minValue = 0;
 //			_numValue = _maxValue;
@@ -43,6 +52,9 @@ namespace Software_Interface_v2 {
 			{
 				return;
 			}
+			NumericSlider.Value += 1;
+			txtNum.Text = NumericSlider.Value.ToString();
+//			SetValue(NumValueProperty, (int)GetValue(NumValueProperty)+1);
 			++NumValue;
 		}
 
@@ -51,6 +63,9 @@ namespace Software_Interface_v2 {
 			{
 				return;
 			}
+			NumericSlider.Value -= 1;
+			txtNum.Text = NumericSlider.Value.ToString();
+//			SetValue(NumValueProperty, (int)GetValue(NumValueProperty)- 1);
 			--NumValue;
 		}
 
@@ -63,6 +78,22 @@ namespace Software_Interface_v2 {
 			if (int.TryParse(txtNum.Text, out toSet))
 			{
 				NumValue = toSet;
+				e.Handled = true;
+//				txtNum.Text = NumValue.ToString();
+				NumericSlider.Value = NumValue;
+//				if (toSet < MinValue)
+//				{
+//					SetValue(NumValueProperty, MinValue);
+//				}
+//				else if (toSet > MaxValue)
+//				{
+//					SetValue(NumValueProperty, MaxValue);
+//				}
+//				else
+//				{
+//					SetValue(NumValueProperty, toSet);
+//				}
+//				SetValue(TextBoxValueProperty, NumValue.ToString());
 			}
 
 		}
@@ -73,9 +104,9 @@ namespace Software_Interface_v2 {
 		public int MaxValue {
 			get { return (int) GetValue(MaxValueProperty); }
 			set {
-				SetValue(MaxValueProperty, value);
-//				NumericSlider.Maximum = value;
-
+				NumericSlider.Maximum = value;
+//				SetValue(MaxValueProperty, value);
+				_maxValue = value;
 			}
 		}
 
@@ -85,8 +116,9 @@ namespace Software_Interface_v2 {
 		public int MinValue {
 			get { return (int) GetValue(MinValueProperty); }
 			set {
-				SetValue(MinValueProperty, value);
-//				NumericSlider.Minimum = value;
+				NumericSlider.Minimum = value;
+//				SetValue(MinValueProperty, value);
+				_minValue = value;
 			}
 		}
 
@@ -98,24 +130,29 @@ namespace Software_Interface_v2 {
 			set {
 				if (value > _maxValue)
 				{
-					SetValue(NumValueProperty, MaxValue);
+//					SetValue(NumValueProperty, MaxValue);
+					_numValue = _maxValue;
 				}
 				else if (value < _minValue)
 				{
-					SetValue(NumValueProperty, MinValue);
+//					SetValue(NumValueProperty, MinValue);
+					_numValue = _minValue;
 				}
 				else
 				{
-					SetValue(NumValueProperty, value);
+//					SetValue(NumValueProerty, value);
+					_numValue = value;
 				}
-				SetValue(TextBoxValueProperty, NumValue.ToString());
 //				TextBoxValue = NumValue.ToString();
 //				NumericSlider.Value = NumValue;
-				NumericValueChanged?.Invoke(this, EventArgs.Empty);}
+				txtNum.Text = _numValue.ToString();
+//				SetValue(TextBoxValueProperty, NumValue.ToString());
+				NumericValueChanged?.Invoke(this, EventArgs.Empty);
+			}
 		}
 
 
-		public static readonly DependencyProperty TextBoxValueProperty = DependencyProperty.Register(
+/*		public static readonly DependencyProperty TextBoxValueProperty = DependencyProperty.Register(
 			"TextBoxValue", typeof(string), typeof(NumericUpDown), new PropertyMetadata(default(string)));
 
 		public string TextBoxValue {
@@ -134,14 +171,19 @@ namespace Software_Interface_v2 {
 				{
 					SetValue(TextBoxValueProperty, toCheck.ToString());
 				}
-//				txtNum.Text = TextBoxValue;
+				txtNum.Text = TextBoxValue;
 
 			}
-		}
+		}*/
 
 
 		private void OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+			e.Handled = true;
 			NumValue = (int) NumericSlider.Value;
+			txtNum.TextChanged -= txtNum_TextChanged;
+			txtNum.Text = NumericSlider.Value.ToString();
+			txtNum.TextChanged += txtNum_TextChanged;
+//			SetValue(NumValueProperty, (int) NumericSlider.Value);
 		}
 
 		private void OnPreviewTextInput(object sender, TextCompositionEventArgs e) {
