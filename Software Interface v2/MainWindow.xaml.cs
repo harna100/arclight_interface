@@ -73,7 +73,9 @@ namespace Software_Interface_v2 {
 		}
 
 		private void WriteToDebug(string valToWrite) {
-			TextBoxOutput.Text += DateTime.Now.ToLongTimeString() + ": " + valToWrite + "\n";
+//			TextBoxOutput.Text += DateTime.Now.ToLongTimeString() + ": " + valToWrite + "\n";
+			TextBoxOutput.AppendText(DateTime.Now.ToLongTimeString() + ": " + valToWrite + "\n");
+			TextBoxOutput.ScrollToEnd();
 		}
 
 		private void SendValueToArduino() {

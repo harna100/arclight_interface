@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Software_Interface_v2"
         mc:Ignorable="d"
-        Title="Arclight Colorpicker" Height="1000" Width="825"
+        Title="Arclight Colorpicker" Height="1025" Width="825"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:ncore="http://schemas.ncore.com/wpf/xaml/colorbox"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -85,7 +85,7 @@
 
 
                     <materialDesign:ColorZone
-                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                        Grid.Row="0" Grid.Column="0"
                         VerticalAlignment="Top" Mode="PrimaryMid"
                         materialDesign:ShadowAssist.ShadowDepth="Depth2">
                         <Grid>
@@ -122,8 +122,9 @@
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="TextBoxOutput"
                                  Background="White" Foreground="Black"
-                                 TextWrapping="Wrap" AcceptsReturn="True" MaxLines="5" MinLines="5"
+                                 TextWrapping="NoWrap" AcceptsReturn="True" MaxLines="5" MinLines="5" TextAlignment="Left"
                                  VerticalScrollBarVisibility="Auto"
+                                 HorizontalScrollBarVisibility="Auto"
                                  Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
                                  Margin="20 20 10 20"/>
 
