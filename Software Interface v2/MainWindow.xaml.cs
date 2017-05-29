@@ -24,7 +24,6 @@ namespace Software_Interface_v2 {
 	public partial class MainWindow:Window {
 		private SerialPort serialPort;
 
-
 		public MainWindow() {
 			InitializeComponent();
 			this.Closing += (sender, args) => {
@@ -56,21 +55,18 @@ namespace Software_Interface_v2 {
 			}
 			else
 			{
+				serialPort = new SerialPort();
 				WriteToDebug("Could not auto detect port");
 //				ListBoxComPorts.ItemsSource = GetAvailablePorts();
 //				DialogBox.ShowDialog(null);
 			}
-//			PrimaryAlpha.NumValue = 255;
-//			SecondaryAlpha.NumValue = 255;
-//			Width.MaxValue = 60;
-//			Width.NumValue = 0;
-//			SecondaryWhite.MaxValue = 27000;
-//			SecondaryWhite.NumValue = 6500;
-//			SecondaryWhite.MinValue = 1700;
-//			PrimaryWhite.MaxValue = 27000;
-//			PrimaryWhite.NumValue = 6500;
-//			PrimaryWhite.MinValue = 1700;
+			serialPort.DataReceived += (sender2, args) => {
+				string post = serialPort.ReadExisting();
+				WriteToDebug(post);
+
+			};
 		}
+		
 
 		private void SetColorClicked(object sender, RoutedEventArgs e) {
 			SendValueToArduino();
@@ -81,7 +77,25 @@ namespace Software_Interface_v2 {
 		}
 
 		private void SendValueToArduino() {
+			if (!serialPort.IsOpen)
+			{
+				WriteToDebug("Serial port not open. Unable to send.");
+				return;
+			}
 			byte[][] valuesToSend = GetValues();
+			try
+			{
+				string toSend = "$";
+				toSend += JoinArray(valuesToSend[0]);
+				toSend += JoinArray(valuesToSend[1]) + Width.NumValue + "*";
+				WriteToDebug("About to write.");
+				serialPort.Write(toSend);
+				WriteToDebug("Wrote to Serial.");
+			}
+			catch (Exception e)
+			{
+				WriteToDebug("Failed to send. " + e.Message);
+			}
 		}
 
 		private byte[][] GetValues() {
@@ -140,19 +154,21 @@ namespace Software_Interface_v2 {
 		}
 
 		private void PrimaryNumericChanged(object sender, EventArgs e) {
-//			MessageBox.Show("sfgsdfg");
-			UpdateRGBColor();
+			UpdatePrimaryRGBColor();
 		}
-
+		
 		//updates the color on the RGBA slider page
-		public void UpdateRGBColor() {
+		public void UpdatePrimaryRGBColor() {
 			byte[] rgba = GetColorPrimaryRGBSlider();
-			Color c = Color.FromArgb(rgba[3], rgba[0], rgba[1], rgba[2]);
-			PrimaryRGBImage.Background = new SolidColorBrush(c);
-
+			UpdateImage(PrimaryRGBImage, rgba);
 		}
 
-		// gets a RGBA from the sliders on the RGBA slider page
+		public void UpdateSecondaryRGBColor() {
+			byte[] rgba = GetColorSecondaryRGBSlider();
+			UpdateImage(SecondaryRGBImage, rgba);
+		}
+
+		// gets a RGBA from the sliders on the Primary RGBA slider page
 		public byte[] GetColorPrimaryRGBSlider() {
 			byte red = (byte) PrimaryRed.NumValue;
 			byte green = (byte) PrimaryGreen.NumValue;
@@ -160,14 +176,8 @@ namespace Software_Interface_v2 {
 			byte bright = (byte) PrimaryAlpha.NumValue;
 			return new[] {red, green, blue, bright};
 		}
-
-		public void UpdateSecondaryRGBColor() {
-			byte[] rgba = GetColorSecondaryRGBSlider();
-			Color c = Color.FromArgb(rgba[3], rgba[0], rgba[1], rgba[2]);
-			SecondaryRGBImage.Background = new SolidColorBrush(c);
-		}
-
-		// gets a RGBA from the sliders on the RGBA slider page
+		
+		// gets a RGBA from the sliders on the Secondary RGBA slider page
 		public byte[] GetColorSecondaryRGBSlider() {
 			byte red = (byte) SecondaryRed.NumValue;
 			byte green = (byte) SecondaryGreen.NumValue;
@@ -175,7 +185,27 @@ namespace Software_Interface_v2 {
 			byte bright = (byte) SecondaryAlpha.NumValue;
 			return new[] {red, green, blue, bright};
 		}
+		
+		
+		
+		
+		private void PrimaryWhiteChanged(object sender, EventArgs e) {
+			UpdatePrimaryWhite();
+		}
 
+		private void SecondaryWhiteChanged(object sender, EventArgs e) {
+			UpdateSecondaryWhite();
+		}
+
+		private void UpdatePrimaryWhite() {
+			byte[] rgba = GetColorWhiteTemp(PrimaryWhite);
+			UpdateImage(PrimaryWhiteImage, rgba);
+		}
+
+		private void UpdateSecondaryWhite() {
+			byte[] rgba = GetColorWhiteTemp(SecondaryWhite);
+			UpdateImage(SecondaryWhiteImage, rgba);
+		}
 
 		private byte[] GetColorPrimaryWhiteTemp() {
 			return GetColorWhiteTemp(PrimaryWhite);
@@ -184,7 +214,6 @@ namespace Software_Interface_v2 {
 		private byte[] GetColorSecondaryWhiteTemp() {
 			return GetColorWhiteTemp(SecondaryWhite);
 		}
-
 
 		// get a RGBA from the white temp page
 		// algorithm from http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
@@ -243,7 +272,7 @@ namespace Software_Interface_v2 {
 			}
 			return new byte[] {(byte) red, (byte) green, (byte) blue, 255};
 		}
-
+		
 		private byte[] GetColorPrimaryColorPicker() {
 			return GetColorPicker(PrimaryColorPicker);
 		}
@@ -261,28 +290,69 @@ namespace Software_Interface_v2 {
 			byte a = picked.A;
 			return new[] {r, g, b, a};
 		}
+		
+		
+		
+		
+		
+		private void PrimaryModChanged(object sender, EventArgs e) {
+			UpdatePrimaryModColor();
+		}
 
+		private void SecondaryModChanged(object sender, EventArgs e) {
+			UpdateSecondaryModColor();
+		}
+
+		private void UpdatePrimaryModColor() {
+			byte[] rgba = GetColorPrimaryModWheel();
+			UpdateImage(PrimaryModImage, rgba);
+		}
+
+		private void UpdateSecondaryModColor() {
+			byte[] rgba = GetColorSecondaryModWheel();
+			UpdateImage(SecondaryModImage, rgba);
+		}
+		
+		
 		private byte[] GetColorPrimaryModWheel() {
-			return null;
+			return GetModWheel(PrimaryModRed, PrimaryModGreen, PrimaryModBlue, PrimaryModMod);
 		}
 
 		private byte[] GetColorSecondaryModWheel() {
-			return null;
+			return GetModWheel(SecondaryModRed, SecondaryModGreen, SecondaryModBlue, SecondaryModMod);
+		}
+
+
+		private byte[] GetModWheel(NumControl red, NumControl green, NumControl blue, NumControl mod) {
+			decimal modRedVal = new decimal(red.NumValue/100.0);
+			decimal modGreenVal = new decimal(green.NumValue/100.0);
+			decimal modBlueVal = new decimal(blue.NumValue/100.0);
+			int modVal = mod.NumValue;
+
+			byte valR = (byte)MaxOrLess((int)(modVal * modRedVal), 255);
+			byte valG = (byte)MaxOrLess((int)(modVal * modGreenVal), 255);
+			byte valB = (byte)MaxOrLess((int)(modVal * modBlueVal), 255);
+
+			return new byte[] {valR, valG, valB, 255};
+		}
+
+		private void UpdateImage(Canvas toUpdate, byte[] rgba) {
+			Color c = Color.FromArgb(rgba[3], rgba[0], rgba[1], rgba[2]);
+			toUpdate.Background = new SolidColorBrush(c);
 		}
 
 
 
 
 
-
-		public string PadZereos(int toPad) {
+		public string PadZereos(byte toPad) {
 			string toReturn = toPad.ToString().PadLeft(3, '0');
 			return toReturn;
 		}
 
-		public string JoinArray(int[] arr) {
+		public string JoinArray(byte[] arr) {
 			string toReturn = "";
-			foreach (int i in arr)
+			foreach (byte i in arr)
 			{
 				toReturn += PadZereos(i);
 				toReturn += ",";
@@ -421,6 +491,7 @@ namespace Software_Interface_v2 {
 				serialPort1.Close();
 			}
 		}*/
+
 
 	}
 

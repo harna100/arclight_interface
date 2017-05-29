@@ -196,7 +196,7 @@
                                     </Grid.ColumnDefinitions>
                                     <local:NumControl x:Name="PrimaryWhite"
                                                          MinValue="1500" MaxValue="27000" NumValue="6500"
-                                                         Grid.Column="0"/>
+                                                         Grid.Column="0" NumericValueChanged="PrimaryWhiteChanged"/>
                                     <Border BorderBrush="Black" BorderThickness="2"
                                             Grid.Column="1">
                                         <Canvas x:Name="PrimaryWhiteImage" Background="White"/>
@@ -207,7 +207,50 @@
                             <TabItem Header="Color Picker">
                                 <ncore:ColorBox x:Name="PrimaryColorPicker"/>
                             </TabItem>
-                            <TabItem Header="Mod Wheel"></TabItem>
+                            <TabItem Header="Mod Wheel">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Row="0" Grid.Column="0">
+                                        <TextBlock FontSize="20" Margin="8 0 0 4">Red</TextBlock>
+                                        <local:NumControl x:Name="PrimaryModRed"
+                                                          MinValue="0" MaxValue="100" NumValue="100" 
+                                                          NumericValueChanged="PrimaryModChanged"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="0">
+                                        <TextBlock FontSize="20" Margin="8 0 0 4">Green</TextBlock>
+                                        <local:NumControl x:Name="PrimaryModGreen"
+                                                          MinValue="0" MaxValue="100" NumValue="100" 
+                                                          NumericValueChanged="PrimaryModChanged"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="2" Grid.Column="0">
+                                        <TextBlock FontSize="20" Margin="8 0 0 4">Blue</TextBlock>
+                                        <local:NumControl x:Name="PrimaryModBlue"
+                                                          MinValue="0" MaxValue="100" NumValue="100" 
+                                                          NumericValueChanged="PrimaryModChanged"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="3" Grid.Column="0">
+                                        <TextBlock FontSize="20" Margin="8 0 0 4">Modifer</TextBlock>
+                                        <local:NumControl x:Name="PrimaryModMod"
+                                                          MinValue="0" MaxValue="1000" NumValue="0" 
+                                                          NumericValueChanged="PrimaryModChanged"/>
+                                    </StackPanel>
+
+
+                                    <Border BorderBrush="Black" BorderThickness="2"
+                                            Grid.Row="0" Grid.Column="1" Grid.RowSpan="4">
+                                        <Canvas x:Name="PrimaryModImage" Background="White"/>
+                                    </Border>
+                                </Grid>    
+                            </TabItem>
                         </TabControl>
                     </StackPanel>
 
@@ -267,7 +310,7 @@
                                     </Grid.ColumnDefinitions>
                                     <local:NumControl x:Name="SecondaryWhite"
                                                          MinValue="1500" MaxValue="27000" NumValue="6500"
-                                                         Grid.Column="0"/>
+                                                         Grid.Column="0" NumericValueChanged="SecondaryWhiteChanged"/>
                                     <Border BorderBrush="Black" BorderThickness="2"
                                             Grid.Column="1">
                                         <Canvas x:Name="SecondaryWhiteImage" Background="White"/>
@@ -278,7 +321,54 @@
                             <TabItem Header="Color Picker">
                                 <ncore:ColorBox x:Name="SecondaryColorPicker"/>
                             </TabItem>
-                            <TabItem Header="Mod Wheel"></TabItem>
+                            <TabItem Header="Mod Wheel">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Row="0" Grid.Column="0">
+                                        <TextBlock FontSize="20" Margin="8 0 0 4">Red</TextBlock>
+                                        <local:NumControl x:Name="SecondaryModRed"
+                                                          MinValue="0" MaxValue="100" NumValue="100" 
+                                                          NumericValueChanged="SecondaryModChanged"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="0">
+                                        <TextBlock FontSize="20" Margin="8 0 0 4">Green</TextBlock>
+                                        <local:NumControl x:Name="SecondaryModGreen"
+                                                          MinValue="0" MaxValue="100" NumValue="100" 
+                                                          NumericValueChanged="SecondaryModChanged"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="2" Grid.Column="0">
+                                        <TextBlock FontSize="20" Margin="8 0 0 4">Blue</TextBlock>
+                                        <local:NumControl x:Name="SecondaryModBlue"
+                                                          MinValue="0" MaxValue="100" NumValue="100" 
+                                                          NumericValueChanged="SecondaryModChanged"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="3" Grid.Column="0">
+                                        <TextBlock FontSize="20" Margin="8 0 0 4">Modifer</TextBlock>
+                                        <local:NumControl x:Name="SecondaryModMod"
+                                                          MinValue="0" MaxValue="1000" NumValue="0" 
+                                                          NumericValueChanged="SecondaryModChanged"/>
+                                    </StackPanel>
+
+
+                                    <Border BorderBrush="Black" BorderThickness="2"
+                                            Grid.Row="0" Grid.Column="1" Grid.RowSpan="4">
+                                        <Canvas x:Name="SecondaryModImage" Background="White"/>
+                                    </Border>
+                                </Grid>
+                                
+                                
+                                
+                                
+                            </TabItem>
                         </TabControl>
                     </StackPanel>
                 </Grid>
