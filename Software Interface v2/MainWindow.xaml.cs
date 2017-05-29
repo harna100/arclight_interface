@@ -60,11 +60,13 @@ namespace Software_Interface_v2 {
 //				ListBoxComPorts.ItemsSource = GetAvailablePorts();
 //				DialogBox.ShowDialog(null);
 			}
-			serialPort.DataReceived += (sender2, args) => {
-				string post = serialPort.ReadExisting();
-				WriteToDebug(post);
+			serialPort.DataReceived += OnDataReceived;
+		}
 
-			};
+		private void OnDataReceived(object sender, SerialDataReceivedEventArgs args) {
+			string post = serialPort.ReadExisting();
+			WriteToDebug(post);
+
 		}
 		
 
@@ -74,8 +76,22 @@ namespace Software_Interface_v2 {
 
 		private void WriteToDebug(string valToWrite) {
 //			TextBoxOutput.Text += DateTime.Now.ToLongTimeString() + ": " + valToWrite + "\n";
-			TextBoxOutput.AppendText(DateTime.Now.ToLongTimeString() + ": " + valToWrite + "\n");
-			TextBoxOutput.ScrollToEnd();
+			if (!Dispatcher.CheckAccess())
+			{
+				Dispatcher.BeginInvoke(
+					new Action<Control, string>(
+						(control, s) => {
+							(control as TextBox).AppendText(DateTime.Now.ToLongTimeString() + ": " + valToWrite + "\n");
+							TextBoxOutput.ScrollToEnd();
+						}),
+					new object[] {TextBoxOutput, valToWrite}
+				);
+			}
+			else
+			{
+				TextBoxOutput.AppendText(DateTime.Now.ToLongTimeString() + ": " + valToWrite + "\n");
+				TextBoxOutput.ScrollToEnd();	
+			}
 		}
 
 		private void SendValueToArduino() {
