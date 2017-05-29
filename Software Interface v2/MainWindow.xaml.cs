@@ -88,7 +88,7 @@ namespace Software_Interface_v2 {
 				string toSend = "$";
 				toSend += JoinArray(valuesToSend[0]);
 				toSend += JoinArray(valuesToSend[1]) + Width.NumValue + "*";
-				WriteToDebug("About to write.");
+				WriteToDebug("About to write: " + toSend);
 				serialPort.Write(toSend);
 				WriteToDebug("Wrote to Serial.");
 			}
