@@ -42,6 +42,8 @@ namespace Software_Interface_v2 {
 			if (portName != null)
 			{
 				serialPort = new SerialPort(portName, 115200);
+				serialPort.RtsEnable = true;
+				serialPort.DtrEnable = true;
 				try
 				{
 					serialPort.Open();
